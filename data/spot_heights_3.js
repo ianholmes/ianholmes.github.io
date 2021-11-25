@@ -1,0 +1,1 @@
+var json_spot_heights_3 = {"type":"FeatureCollection","name":"spot_heights_3","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"fid":"1","height":100.0},"geometry":{"type":"Point","coordinates":[0.0,0.0]}}]}
