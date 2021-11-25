@@ -6,10 +6,81 @@
         <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
         <meta name="mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-capable" content="yes">
-        <link rel="stylesheet" href="css/leaflet.css"><link rel="stylesheet" href="css/L.Control.Locate.min.css">
-        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
-        <link rel="stylesheet" href="css/leaflet-control-geocoder.Geocoder.css">
-        <link rel="stylesheet" href="css/leaflet-measure.css">
+        <link rel="stylesheet" href="./resources/ol.css">
+        <link rel="stylesheet" href="resources/fontawesome-all.min.css">
+        <link rel="stylesheet" href="./resources/ol-layerswitcher.css">
+        <link rel="stylesheet" href="./resources/qgis2web.css">
+        <style>
+        .ol-geocoder.gcd-gl-container {
+            top: 100px!important;
+            left: .5em!important;
+            width: 2.1em!important;
+            height: 2.1em!important;
+        }
+        .ol-geocoder .gcd-gl-container{
+            width: 2.1em!important;
+            height: 2.1em!important;
+        }
+        .ol-geocoder .gcd-gl-control{
+            width: 2.1em!important;
+        }
+        .ol-geocoder .gcd-gl-expanded {
+            width: 15.625em!important;
+            height: 2.1875em;
+        }
+        .ol-touch .ol-geocoder.gcd-gl-container{
+            top: 130px!important;
+        }
+        .ol-geocoder .gcd-gl-btn {
+            width: 1.375em!important;
+            height: 1.375em!important;
+            top: .225em!important;
+            background-image: none!important;
+        }
+        </style>
+<style>
+.search-layer {
+  top: 135px;
+  left: .5em;
+}
+.ol-touch .search-layer {
+  top: 180px;
+}
+</style>
+        <style>
+        html, body {
+            background-color: #75dac6;
+        }
+        .ol-control button {
+            background-color: #f8f8f8 !important;
+            color: #000000 !important;
+            border-radius: 0px !important;
+        }
+        .ol-zoom, .geolocate, .gcd-gl-control .ol-control {
+            background-color: rgba(255,255,255,.4) !important;
+            padding: 3px !important;
+        }
+        .ol-scale-line {
+            background: none !important;
+        }
+        .ol-scale-line-inner {
+            border: 2px solid #f8f8f8 !important;
+            border-top: none !important;
+            background: rgba(255, 255, 255, 0.5) !important;
+            color: black !important;
+        }
+        </style>
+
+        <style>
+        .geolocate {
+            top: 65px;
+            left: .5em;
+        }
+        .ol-touch .geolocate {
+            top: 80px;
+        }
+        </style>
+        <link href="resources/ol-geocoder.min.css" rel="stylesheet">
         <style>
         #map {
             width: 1174px;
@@ -20,288 +91,21 @@
     </head>
     <body>
         <div id="map">
+            <div id="popup" class="ol-popup">
+                <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+                <div id="popup-content"></div>
+            </div>
         </div>
-        <script src="js/qgis2web_expressions.js"></script>
-        <script src="js/leaflet.js"></script><script src="js/L.Control.Locate.min.js"></script>
-        <script src="js/multi-style-layer.js"></script>
-        <script src="js/leaflet.rotatedMarker.js"></script>
-        <script src="js/leaflet.pattern.js"></script>
-        <script src="js/leaflet-hash.js"></script>
-        <script src="js/Autolinker.min.js"></script>
-        <script src="js/rbush.min.js"></script>
-        <script src="js/labelgun.min.js"></script>
-        <script src="js/labels.js"></script>
-        <script src="js/leaflet-control-geocoder.Geocoder.js"></script>
-        <script src="js/leaflet-measure.js"></script>
-        <script src="data/coastline_2.js"></script>
-        <script src="data/contours_smoothed_3.js"></script>
-        <script src="data/spot_heights_4.js"></script>
-        <script>
-        var map = L.map('map', {
-            zoomControl:true, maxZoom:28, minZoom:1
-        }).fitBounds([[-0.02186182065120432,-0.026634200154608507],[0.012320660056151166,0.016396807495249615]]);
-        var hash = new L.Hash(map);
-        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
-        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
-        L.control.locate({locateOptions: {maxZoom: 19}}).addTo(map);
-        var measureControl = new L.Control.Measure({
-            position: 'topleft',
-            primaryLengthUnit: 'meters',
-            secondaryLengthUnit: 'kilometers',
-            primaryAreaUnit: 'sqmeters',
-            secondaryAreaUnit: 'hectares'
-        });
-        measureControl.addTo(map);
-        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
-        .innerHTML = '';
-        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
-        .className += ' fas fa-ruler';
-        var bounds_group = new L.featureGroup([]);
-        function setBounds() {
-        }
-        map.createPane('pane_StamenWatercolour_0');
-        map.getPane('pane_StamenWatercolour_0').style.zIndex = 400;
-        var layer_StamenWatercolour_0 = L.tileLayer('http://c.tile.stamen.com/watercolor/{z}/{x}/{y}.jpg', {
-            pane: 'pane_StamenWatercolour_0',
-            opacity: 1.0,
-            attribution: '',
-            minZoom: 1,
-            maxZoom: 28,
-            minNativeZoom: 0,
-            maxNativeZoom: 18
-        });
-        layer_StamenWatercolour_0;
-        map.addLayer(layer_StamenWatercolour_0);
-        map.createPane('pane_OSMstandard_1');
-        map.getPane('pane_OSMstandard_1').style.zIndex = 401;
-        var layer_OSMstandard_1 = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            pane: 'pane_OSMstandard_1',
-            opacity: 1.0,
-            attribution: '',
-            minZoom: 1,
-            maxZoom: 28,
-            minNativeZoom: 0,
-            maxNativeZoom: 18
-        });
-        layer_OSMstandard_1;
-        map.addLayer(layer_OSMstandard_1);
-        function pop_coastline_2(feature, layer) {
-            var popupContent = '<table>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['fid'] !== null ? autolinker.link(feature.properties['fid'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                </table>';
-            layer.bindPopup(popupContent, {maxHeight: 400});
-        }
-
-        function style_coastline_2_0() {
-            return {
-                pane: 'pane_coastline_2',
-                opacity: 1,
-                color: 'rgba(204,204,204,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(51,51,51,1.0)',
-                interactive: false,
-            }
-        }
-        map.createPane('pane_coastline_2');
-        map.getPane('pane_coastline_2').style.zIndex = 402;
-        map.getPane('pane_coastline_2').style['mix-blend-mode'] = 'multiply';
-        var layer_coastline_2 = new L.geoJson(json_coastline_2, {
-            attribution: '',
-            interactive: false,
-            dataVar: 'json_coastline_2',
-            layerName: 'layer_coastline_2',
-            pane: 'pane_coastline_2',
-            onEachFeature: pop_coastline_2,
-            style: style_coastline_2_0,
-        });
-        bounds_group.addLayer(layer_coastline_2);
-        map.addLayer(layer_coastline_2);
-        function pop_contours_smoothed_3(feature, layer) {
-            var popupContent = '<table>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['fid'] !== null ? autolinker.link(feature.properties['fid'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <th scope="row">height</th>\
-                        <td>' + (feature.properties['height'] !== null ? autolinker.link(feature.properties['height'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['type'] !== null ? autolinker.link(feature.properties['type'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                </table>';
-            layer.bindPopup(popupContent, {maxHeight: 400});
-        }
-
-        function style_contours_smoothed_3_0(feature) {
-            switch(String(feature.properties['type'])) {
-                case 'index':
-                    return {
-                pane: 'pane_contours_smoothed_3',
-                opacity: 1,
-                color: 'rgba(204,204,204,1.0)',
-                dashArray: '',
-                lineCap: 'square',
-                lineJoin: 'bevel',
-                weight: 2.0,
-                fillOpacity: 0,
-                interactive: true,
-            }
-                    break;
-                case 'ordinary':
-                    return {
-                pane: 'pane_contours_smoothed_3',
-                opacity: 1,
-                color: 'rgba(204,204,204,1.0)',
-                dashArray: '',
-                lineCap: 'square',
-                lineJoin: 'bevel',
-                weight: 1.0,
-                fillOpacity: 0,
-                interactive: true,
-            }
-                    break;
-                default:
-                    return {
-                pane: 'pane_contours_smoothed_3',
-                opacity: 1,
-                color: 'rgba(41,239,87,1.0)',
-                dashArray: '',
-                lineCap: 'square',
-                lineJoin: 'bevel',
-                weight: 4.0,
-                fillOpacity: 0,
-                interactive: true,
-            }
-                    break;
-            }
-        }
-        map.createPane('pane_contours_smoothed_3');
-        map.getPane('pane_contours_smoothed_3').style.zIndex = 403;
-        map.getPane('pane_contours_smoothed_3').style['mix-blend-mode'] = 'normal';
-        var layer_contours_smoothed_3 = new L.geoJson(json_contours_smoothed_3, {
-            attribution: '',
-            interactive: true,
-            dataVar: 'json_contours_smoothed_3',
-            layerName: 'layer_contours_smoothed_3',
-            pane: 'pane_contours_smoothed_3',
-            onEachFeature: pop_contours_smoothed_3,
-            style: style_contours_smoothed_3_0,
-        });
-        bounds_group.addLayer(layer_contours_smoothed_3);
-        map.addLayer(layer_contours_smoothed_3);
-        function pop_spot_heights_4(feature, layer) {
-            var popupContent = '<table>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['fid'] !== null ? autolinker.link(feature.properties['fid'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2"><strong>height</strong><br />' + (feature.properties['height'] !== null ? autolinker.link(feature.properties['height'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                </table>';
-            layer.bindPopup(popupContent, {maxHeight: 400});
-        }
-
-        function style_spot_heights_4_0() {
-            return {
-                pane: 'pane_spot_heights_4',
-                shape: 'triangle',
-                radius: 32.0,
-                opacity: 1,
-                color: 'rgba(183,72,75,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1,
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(183,72,75,1.0)',
-                interactive: false,
-            }
-        }
-        function style_spot_heights_4_1() {
-            return {
-                pane: 'pane_spot_heights_4',
-                radius: 31.8,
-                opacity: 1,
-                color: 'rgba(183,72,75,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 2.0,
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(183,72,75,1.0)',
-                interactive: false,
-            }
-        }
-        function style_spot_heights_4_2() {
-            return {
-                pane: 'pane_spot_heights_4',
-                radius: 16.0,
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1,
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(0,0,0,1.0)',
-                interactive: false,
-            }
-        }
-        map.createPane('pane_spot_heights_4');
-        map.getPane('pane_spot_heights_4').style.zIndex = 404;
-        map.getPane('pane_spot_heights_4').style['mix-blend-mode'] = 'normal';
-        var layer_spot_heights_4 = new L.geoJson.multiStyle(json_spot_heights_4, {
-            attribution: '',
-            interactive: false,
-            dataVar: 'json_spot_heights_4',
-            layerName: 'layer_spot_heights_4',
-            pane: 'pane_spot_heights_4',
-            onEachFeature: pop_spot_heights_4,
-            pointToLayers: [function (feature, latlng) {
-                var context = {
-                    feature: feature,
-                    variables: {}
-                };
-                return L.circleMarker(latlng, style_spot_heights_4_0(feature));
-            },function (feature, latlng) {
-                var context = {
-                    feature: feature,
-                    variables: {}
-                };
-                return L.circleMarker(latlng, style_spot_heights_4_1(feature));
-            },function (feature, latlng) {
-                var context = {
-                    feature: feature,
-                    variables: {}
-                };
-                return L.circleMarker(latlng, style_spot_heights_4_2(feature));
-            },
-        ]});
-        bounds_group.addLayer(layer_spot_heights_4);
-        map.addLayer(layer_spot_heights_4);
-        var osmGeocoder = new L.Control.Geocoder({
-            collapsed: true,
-            position: 'topleft',
-            text: 'Search',
-            title: 'Testing'
-        }).addTo(map);
-        document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
-        .className += ' fa fa-search';
-        document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
-        .title += 'Search for a place';
-        var baseMaps = {};
-        L.control.layers(baseMaps,{'<img src="legend/spot_heights_4.png" /> spot_heights': layer_spot_heights_4,'contours_smoothed<br /><table><tr><td style="text-align: center;"><img src="legend/contours_smoothed_3_index0.png" /></td><td>index</td></tr><tr><td style="text-align: center;"><img src="legend/contours_smoothed_3_ordinary1.png" /></td><td>ordinary</td></tr><tr><td style="text-align: center;"><img src="legend/contours_smoothed_3_2.png" /></td><td></td></tr></table>': layer_contours_smoothed_3,'<img src="legend/coastline_2.png" /> coastline': layer_coastline_2,"OSM standard": layer_OSMstandard_1,"Stamen Watercolour": layer_StamenWatercolour_0,},{collapsed:false}).addTo(map);
-        setBounds();
-        </script>
+        <script src="resources/qgis2web_expressions.js"></script>
+        <script src="resources/polyfills.js"></script>
+        <script src="./resources/functions.js"></script>
+        <script src="./resources/ol.js"></script>
+        <script src="./resources/ol-layerswitcher.js"></script>
+        <script src="resources/ol-geocoder.js"></script>
+        <script src="layers/coastline_2.js"></script><script src="layers/contours_smoothed_3.js"></script><script src="layers/spot_heights_4.js"></script>
+        <script src="styles/coastline_2_style.js"></script><script src="styles/contours_smoothed_3_style.js"></script><script src="styles/spot_heights_4_style.js"></script>
+        <script src="./layers/layers.js" type="text/javascript"></script> 
+        <script src="./resources/Autolinker.min.js"></script>
+        <script src="./resources/qgis2web.js"></script>
     </body>
 </html>
