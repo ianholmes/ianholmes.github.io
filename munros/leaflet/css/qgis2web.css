@@ -92,6 +92,14 @@
             text-align: center !important;
             line-height: 30px !important;
         }
+		
+		 .leaflet-control-measure .leaflet-control-measure-toggle {
+            width: 30px !important;
+            height: 30px !important;
+            font-size: 13px !important;
+            text-align: center !important;
+            line-height: 30px !important;
+        }
         .leaflet-control-measure .leaflet-control {
             width: 30px !important;
             height: 30px !important;
