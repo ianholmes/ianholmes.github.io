@@ -53,11 +53,6 @@
 			activeColor: '#ABE67E',
 			completedColor: '#C8F2BE'
         });
-        measureControl.addTo(map);
-        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
-        .innerHTML = '';
-        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
-        .className += ' fas fa-ruler';
         var bounds_group = new L.featureGroup([]);
         function setBounds() {
         }
@@ -369,6 +364,11 @@
         map.on("layerremove", function(){
             resetLabels([layer_Munros_4]);
         });
+        measureControl.addTo(map);
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .innerHTML = '';
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .className += ' fas fa-ruler';
         </script>
     </body>
 </html>
