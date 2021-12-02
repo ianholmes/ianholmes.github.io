@@ -1,6 +1,6 @@
 
         #map {
-            background-color: #ffffff
+            background-color: #a6cee3
         }
         th {
             text-align: left;
@@ -86,14 +86,6 @@
             box-shadow: none !important;
         }
         .leaflet-control-search .search-button {
-            width: 30px !important;
-            height: 30px !important;
-            font-size: 13px !important;
-            text-align: center !important;
-            line-height: 30px !important;
-        }
-		
-		 .leaflet-control-measure .leaflet-control-measure-toggle {
             width: 30px !important;
             height: 30px !important;
             font-size: 13px !important;

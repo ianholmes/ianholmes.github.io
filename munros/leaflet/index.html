@@ -16,14 +16,20 @@
             height: 933px;
         }
         </style>
-        <title></title>
+        <title>Munro Map</title>
     </head>
     <body>
-	<a href="/index.html">Home page</a>
+	<h1>A map of the Munro's of Scotland</h1>
+	<p>The Munro's that I have climbed.<br />Last updated: 02/12/2021.</p>
+	<p>A link back <a href="/index.html">home</a>.</p>
+	
+	
+	
         <div id="map">
         </div>
         <script src="js/qgis2web_expressions.js"></script>
         <script src="js/leaflet.js"></script>
+        <script src="js/multi-style-layer.js"></script>
         <script src="js/leaflet-svg-shape-markers.min.js"></script>
         <script src="js/leaflet.rotatedMarker.js"></script>
         <script src="js/leaflet.pattern.js"></script>
@@ -34,13 +40,15 @@
         <script src="js/labels.js"></script>
         <script src="js/leaflet-measure.js"></script>
         <script src="js/leaflet-search.js"></script>
-        <script src="data/Routes_2.js"></script>
-        <script src="data/Bothies_3.js"></script>
-        <script src="data/Munros_4.js"></script>
+        <script src="data/Scotland_2.js"></script>
+        <script src="data/NationalParks_3.js"></script>
+        <script src="data/Routes_4.js"></script>
+        <script src="data/Bothies_5.js"></script>
+        <script src="data/Munros_6.js"></script>
         <script>
         var map = L.map('map', {
             zoomControl:true, maxZoom:28, minZoom:1
-        }).fitBounds([[56.090547657709855,-7.463563792840074],[58.49098790933418,-1.869096432505344]]);
+        }).fitBounds([[54.96786158048191,-9.544871543422238],[58.958594279595054,-0.3192284565777563]]);
         var hash = new L.Hash(map);
         map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
         var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
@@ -49,10 +57,13 @@
             primaryLengthUnit: 'meters',
             secondaryLengthUnit: 'kilometers',
             primaryAreaUnit: 'sqmeters',
-            secondaryAreaUnit: 'hectares',
-			activeColor: '#ABE67E',
-			completedColor: '#C8F2BE'
+            secondaryAreaUnit: 'hectares'
         });
+        measureControl.addTo(map);
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .innerHTML = '';
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .className += ' fas fa-ruler';
         var bounds_group = new L.featureGroup([]);
         function setBounds() {
         }
@@ -81,7 +92,145 @@
         });
         layer_ThunderforestLandscape_1;
         map.addLayer(layer_ThunderforestLandscape_1);
-        function pop_Routes_2(feature, layer) {
+        function pop_Scotland_2(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fid'] !== null ? autolinker.link(feature.properties['fid'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAME'] !== null ? autolinker.link(feature.properties['NAME'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['AREA_CODE'] !== null ? autolinker.link(feature.properties['AREA_CODE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DESCRIPTIO'] !== null ? autolinker.link(feature.properties['DESCRIPTIO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FILE_NAME'] !== null ? autolinker.link(feature.properties['FILE_NAME'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NUMBER'] !== null ? autolinker.link(feature.properties['NUMBER'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NUMBER0'] !== null ? autolinker.link(feature.properties['NUMBER0'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['POLYGON_ID'] !== null ? autolinker.link(feature.properties['POLYGON_ID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['UNIT_ID'] !== null ? autolinker.link(feature.properties['UNIT_ID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">CODE</th>\
+                        <td>' + (feature.properties['CODE'] !== null ? autolinker.link(feature.properties['CODE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>HECTARES</strong><br />' + (feature.properties['HECTARES'] !== null ? autolinker.link(feature.properties['HECTARES'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">AREA</th>\
+                        <td>' + (feature.properties['AREA'] !== null ? autolinker.link(feature.properties['AREA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['TYPE_CODE'] !== null ? autolinker.link(feature.properties['TYPE_CODE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DESCRIPT0'] !== null ? autolinker.link(feature.properties['DESCRIPT0'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['TYPE_COD0'] !== null ? autolinker.link(feature.properties['TYPE_COD0'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DESCRIPT1'] !== null ? autolinker.link(feature.properties['DESCRIPT1'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Scotland_2_0() {
+            return {
+                pane: 'pane_Scotland_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(138,138,138,1.0)',
+                interactive: false,
+            }
+        }
+        map.createPane('pane_Scotland_2');
+        map.getPane('pane_Scotland_2').style.zIndex = 402;
+        map.getPane('pane_Scotland_2').style['mix-blend-mode'] = 'normal';
+        var layer_Scotland_2 = new L.geoJson(json_Scotland_2, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Scotland_2',
+            layerName: 'layer_Scotland_2',
+            pane: 'pane_Scotland_2',
+            onEachFeature: pop_Scotland_2,
+            style: style_Scotland_2_0,
+        });
+        bounds_group.addLayer(layer_Scotland_2);
+        function pop_NationalParks_3(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['npark18nm'] !== null ? autolinker.link(feature.properties['npark18nm'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        var pattern_NationalParks_3_0 = new L.StripePattern({
+            weight: 0.5,
+            spaceWeight: 5.0,
+            color: '#b2df8a',
+            opacity: 1.0,
+            spaceOpacity: 0,
+            angle: 315
+        });
+        pattern_NationalParks_3_0.addTo(map);
+        function style_NationalParks_3_0() {
+            return {
+                pane: 'pane_NationalParks_3',
+                stroke: false,
+                fillOpacity: 1,
+                fillPattern: pattern_NationalParks_3_0,
+                interactive: true,
+            }
+        }
+        function style_NationalParks_3_1() {
+            return {
+                pane: 'pane_NationalParks_3',
+                opacity: 1,
+                color: 'rgba(178,223,138,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 2.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_NationalParks_3');
+        map.getPane('pane_NationalParks_3').style.zIndex = 403;
+        map.getPane('pane_NationalParks_3').style['mix-blend-mode'] = 'normal';
+        var layer_NationalParks_3 = new L.geoJson.multiStyle(json_NationalParks_3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_NationalParks_3',
+            layerName: 'layer_NationalParks_3',
+            pane: 'pane_NationalParks_3',
+            onEachFeature: pop_NationalParks_3,
+            styles: [style_NationalParks_3_0,style_NationalParks_3_1,]
+        });
+        bounds_group.addLayer(layer_NationalParks_3);
+        map.addLayer(layer_NationalParks_3);
+        function pop_Routes_4(feature, layer) {
             var popupContent = '<table>\
                     <tr>\
                         <td colspan="2">' + (feature.properties['fid'] !== null ? autolinker.link(feature.properties['fid'].toLocaleString()) : '') + '</td>\
@@ -132,9 +281,9 @@
             layer.bindPopup(popupContent, {maxHeight: 400});
         }
 
-        function style_Routes_2_0() {
+        function style_Routes_4_0() {
             return {
-                pane: 'pane_Routes_2',
+                pane: 'pane_Routes_4',
                 opacity: 1,
                 color: 'rgba(255,158,23,1.0)',
                 dashArray: '1,5',
@@ -142,23 +291,23 @@
                 lineJoin: 'round',
                 weight: 4.0,
                 fillOpacity: 0,
-                interactive: false,
+                interactive: true,
             }
         }
-        map.createPane('pane_Routes_2');
-        map.getPane('pane_Routes_2').style.zIndex = 402;
-        map.getPane('pane_Routes_2').style['mix-blend-mode'] = 'normal';
-        var layer_Routes_2 = new L.geoJson(json_Routes_2, {
+        map.createPane('pane_Routes_4');
+        map.getPane('pane_Routes_4').style.zIndex = 404;
+        map.getPane('pane_Routes_4').style['mix-blend-mode'] = 'normal';
+        var layer_Routes_4 = new L.geoJson(json_Routes_4, {
             attribution: '',
-            interactive: false,
-            dataVar: 'json_Routes_2',
-            layerName: 'layer_Routes_2',
-            pane: 'pane_Routes_2',
-            onEachFeature: pop_Routes_2,
-            style: style_Routes_2_0,
+            interactive: true,
+            dataVar: 'json_Routes_4',
+            layerName: 'layer_Routes_4',
+            pane: 'pane_Routes_4',
+            onEachFeature: pop_Routes_4,
+            style: style_Routes_4_0,
         });
-        bounds_group.addLayer(layer_Routes_2);
-        function pop_Bothies_3(feature, layer) {
+        bounds_group.addLayer(layer_Routes_4);
+        function pop_Bothies_5(feature, layer) {
             var popupContent = '<table>\
                     <tr>\
                         <th scope="row">Name</th>\
@@ -180,9 +329,9 @@
             layer.bindPopup(popupContent, {maxHeight: 400});
         }
 
-        function style_Bothies_3_0() {
+        function style_Bothies_5_0() {
             return {
-                pane: 'pane_Bothies_3',
+                pane: 'pane_Bothies_5',
                 shape: 'square',
                 radius: 4.0,
                 opacity: 1,
@@ -197,28 +346,31 @@
                 interactive: true,
             }
         }
-        map.createPane('pane_Bothies_3');
-        map.getPane('pane_Bothies_3').style.zIndex = 403;
-        map.getPane('pane_Bothies_3').style['mix-blend-mode'] = 'normal';
-        var layer_Bothies_3 = new L.geoJson(json_Bothies_3, {
+        map.createPane('pane_Bothies_5');
+        map.getPane('pane_Bothies_5').style.zIndex = 405;
+        map.getPane('pane_Bothies_5').style['mix-blend-mode'] = 'normal';
+        var layer_Bothies_5 = new L.geoJson(json_Bothies_5, {
             attribution: '',
             interactive: true,
-            dataVar: 'json_Bothies_3',
-            layerName: 'layer_Bothies_3',
-            pane: 'pane_Bothies_3',
-            onEachFeature: pop_Bothies_3,
+            dataVar: 'json_Bothies_5',
+            layerName: 'layer_Bothies_5',
+            pane: 'pane_Bothies_5',
+            onEachFeature: pop_Bothies_5,
             pointToLayer: function (feature, latlng) {
                 var context = {
                     feature: feature,
                     variables: {}
                 };
-                return L.shapeMarker(latlng, style_Bothies_3_0(feature));
+                return L.shapeMarker(latlng, style_Bothies_5_0(feature));
             },
         });
-        bounds_group.addLayer(layer_Bothies_3);
-        map.addLayer(layer_Bothies_3);
-        function pop_Munros_4(feature, layer) {
+        bounds_group.addLayer(layer_Bothies_5);
+        map.addLayer(layer_Bothies_5);
+        function pop_Munros_6(feature, layer) {
             var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Hill-bagging'] !== null ? autolinker.link(feature.properties['Hill-bagging'].toLocaleString()) : '') + '</td>\
+                    </tr>\
                     <tr>\
                         <th scope="row">Name</th>\
                         <td>' + (feature.properties['Name'] !== null ? autolinker.link(feature.properties['Name'].toLocaleString()) : '') + '</td>\
@@ -266,19 +418,16 @@
                     <tr>\
                         <td colspan="2">' + (feature.properties['Photo'] !== null ? autolinker.link(feature.properties['Photo'].toLocaleString()) : '') + '</td>\
                     </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['Hill-bagging'] !== null ? autolinker.link(feature.properties['Hill-bagging'].toLocaleString()) : '') + '</td>\
-                    </tr>\
                 </table>';
             layer.bindPopup(popupContent, {maxHeight: 400});
         }
 
-        function style_Munros_4_0(feature) {
+        function style_Munros_6_0(feature) {
             switch(String(feature.properties['Climbed'])) {
                 case 'Y':
                     return {
-                pane: 'pane_Munros_4',
-                radius: 5.999999999999998,
+                pane: 'pane_Munros_6',
+                radius: 6.0,
                 opacity: 1,
                 color: 'rgba(61,128,53,1.0)',
                 dashArray: '',
@@ -293,8 +442,8 @@
                     break;
                 default:
                     return {
-                pane: 'pane_Munros_4',
-                radius: 3.999999999999997,
+                pane: 'pane_Munros_6',
+                radius: 4.0,
                 opacity: 1,
                 color: 'rgba(128,17,25,1.0)',
                 dashArray: '',
@@ -309,66 +458,77 @@
                     break;
             }
         }
-        map.createPane('pane_Munros_4');
-        map.getPane('pane_Munros_4').style.zIndex = 404;
-        map.getPane('pane_Munros_4').style['mix-blend-mode'] = 'normal';
-        var layer_Munros_4 = new L.geoJson(json_Munros_4, {
+        map.createPane('pane_Munros_6');
+        map.getPane('pane_Munros_6').style.zIndex = 406;
+        map.getPane('pane_Munros_6').style['mix-blend-mode'] = 'normal';
+        var layer_Munros_6 = new L.geoJson(json_Munros_6, {
             attribution: '',
             interactive: true,
-            dataVar: 'json_Munros_4',
-            layerName: 'layer_Munros_4',
-            pane: 'pane_Munros_4',
-            onEachFeature: pop_Munros_4,
+            dataVar: 'json_Munros_6',
+            layerName: 'layer_Munros_6',
+            pane: 'pane_Munros_6',
+            onEachFeature: pop_Munros_6,
             pointToLayer: function (feature, latlng) {
                 var context = {
                     feature: feature,
                     variables: {}
                 };
-                return L.circleMarker(latlng, style_Munros_4_0(feature));
+                return L.circleMarker(latlng, style_Munros_6_0(feature));
             },
         });
-        bounds_group.addLayer(layer_Munros_4);
-        map.addLayer(layer_Munros_4);
-            var abstract = new L.Control({'position':'bottomright'});
+        bounds_group.addLayer(layer_Munros_6);
+        map.addLayer(layer_Munros_6);
+            var title = new L.Control();
+            title.onAdd = function (map) {
+                this._div = L.DomUtil.create('div', 'info');
+                this.update();
+                return this._div;
+            };
+            title.update = function () {
+                this._div.innerHTML = '<h2>Munro Map</h2>';
+            };
+            title.addTo(map);
+            var abstract = new L.Control({'position':'bottomleft'});
             abstract.onAdd = function (map) {
                 this._div = L.DomUtil.create('div',
                 'leaflet-control abstract');
                 this._div.id = 'abstract'
-
-                    abstract.show();
+                    this._div.setAttribute("onmouseenter", "abstract.show()");
+                    this._div.setAttribute("onmouseleave", "abstract.hide()");
+                    this.hide();
                     return this._div;
                 };
+                abstract.hide = function () {
+                    this._div.classList.remove("abstractUncollapsed");
+                    this._div.classList.add("abstract");
+                    this._div.innerHTML = 'i'
+                }
                 abstract.show = function () {
                     this._div.classList.remove("abstract");
                     this._div.classList.add("abstractUncollapsed");
-                    this._div.innerHTML = 'Map showing all the Munros in Scotland.<br />Munro data from: http://www.hills-database.co.uk/<br />Bothy data: Geoff Allan\'s "The Scottish Bothy Bible", digitised by James Jarvis<br />Basemap: © Thunderforest Landscape';
+                    this._div.innerHTML = 'Map showing all the Munros in Scotland.<br />Munro data from: http://www.hills-database.co.uk/<br />Bothy data: Geoff Allan\'s "The Scottish Bothy Bible", digitised by James Jarvis<br />Basemap: © Thunderforest Landscape<br />National Parks source: Office for National Statistics licensed under the Open Government Licence v.3.0<br />Contains OS data © Crown copyright and database right [2021]';
             };
             abstract.addTo(map);
         var baseMaps = {};
-        L.control.layers(baseMaps,{'Munros<br /><table><tr><td style="text-align: center;"><img src="legend/Munros_4_Climbed0.png" /></td><td>Climbed</td></tr><tr><td style="text-align: center;"><img src="legend/Munros_4_Notclimbed1.png" /></td><td>Not climbed</td></tr></table>': layer_Munros_4,'<img src="legend/Bothies_3.png" /> Bothies': layer_Bothies_3,'<img src="legend/Routes_2.png" /> Routes': layer_Routes_2,"Thunderforest Landscape": layer_ThunderforestLandscape_1,"OpenStreetMap": layer_OpenStreetMap_0,},{collapsed:false}).addTo(map);
+        L.control.layers(baseMaps,{'Munros<br /><table><tr><td style="text-align: center;"><img src="legend/Munros_6_Climbed0.png" /></td><td>Climbed</td></tr><tr><td style="text-align: center;"><img src="legend/Munros_6_Notclimbed1.png" /></td><td>Not climbed</td></tr></table>': layer_Munros_6,'<img src="legend/Bothies_5.png" /> Bothies': layer_Bothies_5,'<img src="legend/Routes_4.png" /> Routes': layer_Routes_4,'<img src="legend/NationalParks_3.png" /> National Parks': layer_NationalParks_3,'<img src="legend/Scotland_2.png" /> Scotland': layer_Scotland_2,"Thunderforest Landscape": layer_ThunderforestLandscape_1,"OpenStreetMap": layer_OpenStreetMap_0,},{collapsed:false}).addTo(map);
         setBounds();
         map.addControl(new L.Control.Search({
-            layer: layer_Munros_4,
+            layer: layer_Munros_6,
             initial: false,
             hideMarkerOnCollapse: true,
             propertyName: 'Name'}));
         document.getElementsByClassName('search-button')[0].className +=
          ' fa fa-binoculars';
-        resetLabels([layer_Munros_4]);
+        resetLabels([layer_Munros_6]);
         map.on("zoomend", function(){
-            resetLabels([layer_Munros_4]);
+            resetLabels([layer_Munros_6]);
         });
         map.on("layeradd", function(){
-            resetLabels([layer_Munros_4]);
+            resetLabels([layer_Munros_6]);
         });
         map.on("layerremove", function(){
-            resetLabels([layer_Munros_4]);
+            resetLabels([layer_Munros_6]);
         });
-        measureControl.addTo(map);
-        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
-        .innerHTML = '';
-        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
-        .className += ' fas fa-ruler';
         </script>
     </body>
 </html>
