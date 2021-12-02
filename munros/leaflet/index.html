@@ -12,19 +12,16 @@
         <link rel="stylesheet" href="css/leaflet-measure.css">
         <style>
         #map {
-            width: 1174px;
-            height: 933px;
+            width: 800px;
+            height: 600px;
         }
         </style>
         <title>Munro Map</title>
     </head>
     <body>
-	<h1>A map of the Munro's of Scotland</h1>
-	<p>The Munro's that I have climbed.<br />Last updated: 02/12/2021.</p>
+	<h1>The Munro's of Scotland</h1>
+	<p>All the Munro's I have climbed.</p.>
 	<p>A link back <a href="/index.html">home</a>.</p>
-	
-	
-	
         <div id="map">
         </div>
         <script src="js/qgis2web_expressions.js"></script>
@@ -122,15 +119,13 @@
                         <td colspan="2">' + (feature.properties['UNIT_ID'] !== null ? autolinker.link(feature.properties['UNIT_ID'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <th scope="row">CODE</th>\
-                        <td>' + (feature.properties['CODE'] !== null ? autolinker.link(feature.properties['CODE'].toLocaleString()) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['CODE'] !== null ? autolinker.link(feature.properties['CODE'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <td colspan="2"><strong>HECTARES</strong><br />' + (feature.properties['HECTARES'] !== null ? autolinker.link(feature.properties['HECTARES'].toLocaleString()) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['HECTARES'] !== null ? autolinker.link(feature.properties['HECTARES'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <th scope="row">AREA</th>\
-                        <td>' + (feature.properties['AREA'] !== null ? autolinker.link(feature.properties['AREA'].toLocaleString()) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['AREA'] !== null ? autolinker.link(feature.properties['AREA'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
                         <td colspan="2">' + (feature.properties['TYPE_CODE'] !== null ? autolinker.link(feature.properties['TYPE_CODE'].toLocaleString()) : '') + '</td>\
@@ -291,7 +286,7 @@
                 lineJoin: 'round',
                 weight: 4.0,
                 fillOpacity: 0,
-                interactive: true,
+                interactive: false,
             }
         }
         map.createPane('pane_Routes_4');
@@ -299,7 +294,7 @@
         map.getPane('pane_Routes_4').style['mix-blend-mode'] = 'normal';
         var layer_Routes_4 = new L.geoJson(json_Routes_4, {
             attribution: '',
-            interactive: true,
+            interactive: false,
             dataVar: 'json_Routes_4',
             layerName: 'layer_Routes_4',
             pane: 'pane_Routes_4',
