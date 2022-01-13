@@ -253,6 +253,7 @@
                         <td>' + (feature.properties['Notes'] !== null ? autolinker.link(feature.properties['Notes'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
+						<th scope="row">Date climbed</th>\
                         <td>' + (feature.properties['DateClimbed'] !== null ? autolinker.link(feature.properties['DateClimbed'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
@@ -260,6 +261,7 @@
                         <td>' + (feature.properties['Hill-bagging'] !== null ? autolinker.link(feature.properties['Hill-bagging'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
+						<th scope="row">Image</th>\
                         <td colspan="2">' + (feature.properties['PhotoHTML'] !== null ? autolinker.link(feature.properties['PhotoHTML'].toLocaleString()) : '') + '</td>\
                     </tr>\
                 </table>';
