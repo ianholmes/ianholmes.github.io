@@ -17,12 +17,24 @@
         </style>
         <title>Munro Map</title>
     </head>
-	<h1>The Munros of Scotland</h1>
-	<p>The Munros I have climbed.<br />Last updated: 13/01/2022.</p.>
-	<p>A link back <a href="/index.html">home</a>.</p>
-    <body>
+	<body>
+		<h1>The Munros of Scotland</h1>
+		<p>Interactive map created with <a href="https://qgis.org" target="_blank">QGIS</a> and the <a href ="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web plugin</a>. Munros are coloured by height.<br />Last updated: 13/01/2022.</p.>
+		<p>A link back <a href="/index.html">home</a>.</p>
+
         <div id="map">
         </div>
+		
+		<h2>Data sources</h2>
+		<ul>
+			<li><b>Munros:</b> <a href="http://www.hills-database.co.uk/" target="_blank">http://www.hills-database.co.uk/</a></li>
+			<li><b>Bothies:</b> Geoff Allan's "The Scottish Bothy Bible", digitised by James Jarvis</li>
+			<li><b>National Parks:</b> Office for National Statistics licensed under the Open Government Licence v.3.0, Contains OS data © Crown copyright and database right [2021]</li>
+			<li><b>Scotland outline:</b> Contains OS data © Crown copyright and database right [2021]</li>
+			<li><b>Basemap:</b> © Thunderforest Landscape</li>
+			<li><b>Basemap:</b> © OpenStreetMap contributors</li>
+		</ul>
+		
         <script src="js/qgis2web_expressions.js"></script>
         <script src="js/leaflet.js"></script>
         <script src="js/leaflet-svg-shape-markers.min.js"></script>
