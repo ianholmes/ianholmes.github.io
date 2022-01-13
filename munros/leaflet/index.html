@@ -230,12 +230,8 @@
         function pop_Munrosheightinmetres_5(feature, layer) {
             var popupContent = '<table>\
                     <tr>\
-                        <th scope="row">Hill-bagging</th>\
-                        <td>' + (feature.properties['Hill-bagging'] !== null ? autolinker.link(feature.properties['Hill-bagging'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
                         <th scope="row">Name</th>\
-                        <td>' + (feature.properties['Name'] !== null ? autolinker.link(feature.properties['Name'].toLocaleString()) : '') + '</td>\
+                        <td><strong>' + (feature.properties['Name'] !== null ? autolinker.link(feature.properties['Name'].toLocaleString()) : '') + '</strong></td>\
                     </tr>\
                     <tr>\
                         <th scope="row">Height (m)</th>\
@@ -254,12 +250,14 @@
                         <td>' + (feature.properties['Notes'] !== null ? autolinker.link(feature.properties['Notes'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <th scope="row">DateClimbed</th>\
                         <td>' + (feature.properties['DateClimbed'] !== null ? autolinker.link(feature.properties['DateClimbed'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <th scope="row">PhotoURL</th>\
-                        <td>' + (feature.properties['PhotoURL'] !== null ? autolinker.link(feature.properties['PhotoURL'].toLocaleString()) : '') + '</td>\
+                        <th scope="row">Hill information</th>\
+                        <td>' + (feature.properties['Hill-bagging'] !== null ? autolinker.link(feature.properties['Hill-bagging'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['PhotoHTML'] !== null ? autolinker.link(feature.properties['PhotoHTML'].toLocaleString()) : '') + '</td>\
                     </tr>\
                 </table>';
             layer.bindPopup(popupContent, {maxHeight: 400});
