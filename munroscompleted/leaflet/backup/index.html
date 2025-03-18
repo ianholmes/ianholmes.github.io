@@ -6,21 +6,21 @@
         <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
         <meta name="mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-capable" content="yes">
-        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/leaflet.css"><link rel="stylesheet" href="css/L.Control.Locate.min.css">
         <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
         <link rel="stylesheet" href="css/leaflet-search.css">
         <style>
         #map {
-            /* width: 1454px; */
-            /*height: 933px; */
-			height: 75vh;
+            /* width: 2048px;*/
+            /* height: 1204px;*/
+			height: 70vh;
         }
         </style>
         <title></title>
     </head>
     <body>
 		<h1>Munros completed</h1>
-		<p>Interactive map created with <a href="https://qgis.org" target="_blank">QGIS</a> and the <a href ="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web plugin</a>.<br />Last updated: 14/01/2022.</p.>
+		<p>Interactive map created with <a href="https://qgis.org" target="_blank">QGIS</a> and the <a href ="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web plugin</a>.<br />Last updated: 03/03/2023.</p.>
 		<p>A link back <a href="/index.html">home</a>.</p>
         <div id="map">
         </div>
@@ -32,7 +32,7 @@
 			<li><b>Basemap:</b> © OpenStreetMap contributors</li>
 		</ul>
         <script src="js/qgis2web_expressions.js"></script>
-        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet.js"></script><script src="js/L.Control.Locate.min.js"></script>
         <script src="js/leaflet.rotatedMarker.js"></script>
         <script src="js/leaflet.pattern.js"></script>
         <script src="js/leaflet-hash.js"></script>
@@ -41,23 +41,27 @@
         <script src="js/labelgun.min.js"></script>
         <script src="js/labels.js"></script>
         <script src="js/leaflet-search.js"></script>
-        <script src="data/AllMunrosbyheightm_4.js"></script>
-        <script src="data/Notclimbed_5.js"></script>
-        <script src="data/Climbed_6.js"></script>
+        <script src="data/AllMunrosbyheightm_1.js"></script>
+        <script src="data/Notclimbed_2.js"></script>
+        <script src="data/Climbed_3.js"></script>
         <script>
         var map = L.map('map', {
             zoomControl:true, maxZoom:28, minZoom:1
-        }).fitBounds([[56.0905367750416,-8.131868834073222],[58.490988153662585,-1.2008081530780834]]);
+        })
         var hash = new L.Hash(map);
         map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
         var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        L.control.locate({locateOptions: {maxZoom: 19}}).addTo(map);
         var bounds_group = new L.featureGroup([]);
         function setBounds() {
+            if (bounds_group.getLayers().length) {
+                map.fitBounds(bounds_group.getBounds());
+            }
         }
-        map.createPane('pane_OSMstandard_0');
-        map.getPane('pane_OSMstandard_0').style.zIndex = 400;
-        var layer_OSMstandard_0 = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            pane: 'pane_OSMstandard_0',
+        map.createPane('pane_ThunderforestLandscape_0');
+        map.getPane('pane_ThunderforestLandscape_0').style.zIndex = 400;
+        var layer_ThunderforestLandscape_0 = L.tileLayer('https://tile.thunderforest.com/landscape/{z}/{x}/{y}.png?apikey=f53f44e2da9e4c15a3dc7ca35335740e', {
+            pane: 'pane_ThunderforestLandscape_0',
             opacity: 1.0,
             attribution: '',
             minZoom: 1,
@@ -65,45 +69,9 @@
             minNativeZoom: 0,
             maxNativeZoom: 18
         });
-        layer_OSMstandard_0;
-        map.createPane('pane_ThunderforestOpenCycleMap_1');
-        map.getPane('pane_ThunderforestOpenCycleMap_1').style.zIndex = 401;
-        var layer_ThunderforestOpenCycleMap_1 = L.tileLayer('https://tile.thunderforest.com/cycle/{z}/{x}/{y}.png?apikey=f53f44e2da9e4c15a3dc7ca35335740e', {
-            pane: 'pane_ThunderforestOpenCycleMap_1',
-            opacity: 1.0,
-            attribution: '',
-            minZoom: 1,
-            maxZoom: 28,
-            minNativeZoom: 0,
-            maxNativeZoom: 18
-        });
-        layer_ThunderforestOpenCycleMap_1;
-        map.createPane('pane_ThunderforestOutdoors_2');
-        map.getPane('pane_ThunderforestOutdoors_2').style.zIndex = 402;
-        var layer_ThunderforestOutdoors_2 = L.tileLayer('https://tile.thunderforest.com/outdoors/{z}/{x}/{y}.png?apikey=f53f44e2da9e4c15a3dc7ca35335740e', {
-            pane: 'pane_ThunderforestOutdoors_2',
-            opacity: 1.0,
-            attribution: '',
-            minZoom: 1,
-            maxZoom: 28,
-            minNativeZoom: 0,
-            maxNativeZoom: 18
-        });
-        layer_ThunderforestOutdoors_2;
-        map.createPane('pane_ThunderforestLandscape_3');
-        map.getPane('pane_ThunderforestLandscape_3').style.zIndex = 403;
-        var layer_ThunderforestLandscape_3 = L.tileLayer('https://tile.thunderforest.com/landscape/{z}/{x}/{y}.png?apikey=f53f44e2da9e4c15a3dc7ca35335740e', {
-            pane: 'pane_ThunderforestLandscape_3',
-            opacity: 1.0,
-            attribution: '',
-            minZoom: 1,
-            maxZoom: 28,
-            minNativeZoom: 0,
-            maxNativeZoom: 18
-        });
-        layer_ThunderforestLandscape_3;
-        map.addLayer(layer_ThunderforestLandscape_3);
-        function pop_AllMunrosbyheightm_4(feature, layer) {
+        layer_ThunderforestLandscape_0;
+        map.addLayer(layer_ThunderforestLandscape_0);
+        function pop_AllMunrosbyheightm_1(feature, layer) {
             var popupContent = '<table>\
                     <tr>\
                         <th scope="row">Name</th>\
@@ -129,10 +97,10 @@
             layer.bindPopup(popupContent, {maxHeight: 400});
         }
 
-        function style_AllMunrosbyheightm_4_0(feature) {
+        function style_AllMunrosbyheightm_1_0(feature) {
             if (feature.properties['Height (m)'] >= 914.600000 && feature.properties['Height (m)'] <= 934.142857 ) {
                 return {
-                pane: 'pane_AllMunrosbyheightm_4',
+                pane: 'pane_AllMunrosbyheightm_1',
                 radius: 6.0,
                 opacity: 1,
                 color: 'rgba(35,35,35,1.0)',
@@ -148,7 +116,7 @@
             }
             if (feature.properties['Height (m)'] >= 934.142857 && feature.properties['Height (m)'] <= 958.000000 ) {
                 return {
-                pane: 'pane_AllMunrosbyheightm_4',
+                pane: 'pane_AllMunrosbyheightm_1',
                 radius: 6.0,
                 opacity: 1,
                 color: 'rgba(35,35,35,1.0)',
@@ -164,7 +132,7 @@
             }
             if (feature.properties['Height (m)'] >= 958.000000 && feature.properties['Height (m)'] <= 987.000000 ) {
                 return {
-                pane: 'pane_AllMunrosbyheightm_4',
+                pane: 'pane_AllMunrosbyheightm_1',
                 radius: 6.0,
                 opacity: 1,
                 color: 'rgba(35,35,35,1.0)',
@@ -180,7 +148,7 @@
             }
             if (feature.properties['Height (m)'] >= 987.000000 && feature.properties['Height (m)'] <= 1010.000000 ) {
                 return {
-                pane: 'pane_AllMunrosbyheightm_4',
+                pane: 'pane_AllMunrosbyheightm_1',
                 radius: 6.0,
                 opacity: 1,
                 color: 'rgba(35,35,35,1.0)',
@@ -196,7 +164,7 @@
             }
             if (feature.properties['Height (m)'] >= 1010.000000 && feature.properties['Height (m)'] <= 1049.000000 ) {
                 return {
-                pane: 'pane_AllMunrosbyheightm_4',
+                pane: 'pane_AllMunrosbyheightm_1',
                 radius: 6.0,
                 opacity: 1,
                 color: 'rgba(35,35,35,1.0)',
@@ -212,7 +180,7 @@
             }
             if (feature.properties['Height (m)'] >= 1049.000000 && feature.properties['Height (m)'] <= 1111.700000 ) {
                 return {
-                pane: 'pane_AllMunrosbyheightm_4',
+                pane: 'pane_AllMunrosbyheightm_1',
                 radius: 6.0,
                 opacity: 1,
                 color: 'rgba(35,35,35,1.0)',
@@ -228,7 +196,7 @@
             }
             if (feature.properties['Height (m)'] >= 1111.700000 && feature.properties['Height (m)'] <= 1344.000000 ) {
                 return {
-                pane: 'pane_AllMunrosbyheightm_4',
+                pane: 'pane_AllMunrosbyheightm_1',
                 radius: 6.0,
                 opacity: 1,
                 color: 'rgba(35,35,35,1.0)',
@@ -243,27 +211,26 @@
             }
             }
         }
-        map.createPane('pane_AllMunrosbyheightm_4');
-        map.getPane('pane_AllMunrosbyheightm_4').style.zIndex = 404;
-        map.getPane('pane_AllMunrosbyheightm_4').style['mix-blend-mode'] = 'normal';
-        var layer_AllMunrosbyheightm_4 = new L.geoJson(json_AllMunrosbyheightm_4, {
+        map.createPane('pane_AllMunrosbyheightm_1');
+        map.getPane('pane_AllMunrosbyheightm_1').style.zIndex = 401;
+        map.getPane('pane_AllMunrosbyheightm_1').style['mix-blend-mode'] = 'normal';
+        var layer_AllMunrosbyheightm_1 = new L.geoJson(json_AllMunrosbyheightm_1, {
             attribution: '',
             interactive: true,
-            dataVar: 'json_AllMunrosbyheightm_4',
-            layerName: 'layer_AllMunrosbyheightm_4',
-            pane: 'pane_AllMunrosbyheightm_4',
-            onEachFeature: pop_AllMunrosbyheightm_4,
+            dataVar: 'json_AllMunrosbyheightm_1',
+            layerName: 'layer_AllMunrosbyheightm_1',
+            pane: 'pane_AllMunrosbyheightm_1',
+            onEachFeature: pop_AllMunrosbyheightm_1,
             pointToLayer: function (feature, latlng) {
                 var context = {
                     feature: feature,
                     variables: {}
                 };
-                return L.circleMarker(latlng, style_AllMunrosbyheightm_4_0(feature));
+                return L.circleMarker(latlng, style_AllMunrosbyheightm_1_0(feature));
             },
         });
-        bounds_group.addLayer(layer_AllMunrosbyheightm_4);
-        map.addLayer(layer_AllMunrosbyheightm_4);
-        function pop_Notclimbed_5(feature, layer) {
+        bounds_group.addLayer(layer_AllMunrosbyheightm_1);
+        function pop_Notclimbed_2(feature, layer) {
             var popupContent = '<table>\
                     <tr>\
                         <th scope="row">Name</th>\
@@ -289,9 +256,9 @@
             layer.bindPopup(popupContent, {maxHeight: 400});
         }
 
-        function style_Notclimbed_5_0() {
+        function style_Notclimbed_2_0() {
             return {
-                pane: 'pane_Notclimbed_5',
+                pane: 'pane_Notclimbed_2',
                 radius: 6.0,
                 opacity: 1,
                 color: 'rgba(35,35,35,1.0)',
@@ -305,26 +272,27 @@
                 interactive: true,
             }
         }
-        map.createPane('pane_Notclimbed_5');
-        map.getPane('pane_Notclimbed_5').style.zIndex = 405;
-        map.getPane('pane_Notclimbed_5').style['mix-blend-mode'] = 'normal';
-        var layer_Notclimbed_5 = new L.geoJson(json_Notclimbed_5, {
+        map.createPane('pane_Notclimbed_2');
+        map.getPane('pane_Notclimbed_2').style.zIndex = 402;
+        map.getPane('pane_Notclimbed_2').style['mix-blend-mode'] = 'normal';
+        var layer_Notclimbed_2 = new L.geoJson(json_Notclimbed_2, {
             attribution: '',
             interactive: true,
-            dataVar: 'json_Notclimbed_5',
-            layerName: 'layer_Notclimbed_5',
-            pane: 'pane_Notclimbed_5',
-            onEachFeature: pop_Notclimbed_5,
+            dataVar: 'json_Notclimbed_2',
+            layerName: 'layer_Notclimbed_2',
+            pane: 'pane_Notclimbed_2',
+            onEachFeature: pop_Notclimbed_2,
             pointToLayer: function (feature, latlng) {
                 var context = {
                     feature: feature,
                     variables: {}
                 };
-                return L.circleMarker(latlng, style_Notclimbed_5_0(feature));
+                return L.circleMarker(latlng, style_Notclimbed_2_0(feature));
             },
         });
-        bounds_group.addLayer(layer_Notclimbed_5);
-        function pop_Climbed_6(feature, layer) {
+        bounds_group.addLayer(layer_Notclimbed_2);
+        map.addLayer(layer_Notclimbed_2);
+        function pop_Climbed_3(feature, layer) {
             var popupContent = '<table>\
                     <tr>\
                         <th scope="row">Name</th>\
@@ -350,9 +318,9 @@
             layer.bindPopup(popupContent, {maxHeight: 400});
         }
 
-        function style_Climbed_6_0() {
+        function style_Climbed_3_0() {
             return {
-                pane: 'pane_Climbed_6',
+                pane: 'pane_Climbed_3',
                 radius: 6.0,
                 opacity: 1,
                 color: 'rgba(35,35,35,1.0)',
@@ -366,30 +334,31 @@
                 interactive: true,
             }
         }
-        map.createPane('pane_Climbed_6');
-        map.getPane('pane_Climbed_6').style.zIndex = 406;
-        map.getPane('pane_Climbed_6').style['mix-blend-mode'] = 'normal';
-        var layer_Climbed_6 = new L.geoJson(json_Climbed_6, {
+        map.createPane('pane_Climbed_3');
+        map.getPane('pane_Climbed_3').style.zIndex = 403;
+        map.getPane('pane_Climbed_3').style['mix-blend-mode'] = 'normal';
+        var layer_Climbed_3 = new L.geoJson(json_Climbed_3, {
             attribution: '',
             interactive: true,
-            dataVar: 'json_Climbed_6',
-            layerName: 'layer_Climbed_6',
-            pane: 'pane_Climbed_6',
-            onEachFeature: pop_Climbed_6,
+            dataVar: 'json_Climbed_3',
+            layerName: 'layer_Climbed_3',
+            pane: 'pane_Climbed_3',
+            onEachFeature: pop_Climbed_3,
             pointToLayer: function (feature, latlng) {
                 var context = {
                     feature: feature,
                     variables: {}
                 };
-                return L.circleMarker(latlng, style_Climbed_6_0(feature));
+                return L.circleMarker(latlng, style_Climbed_3_0(feature));
             },
         });
-        bounds_group.addLayer(layer_Climbed_6);
+        bounds_group.addLayer(layer_Climbed_3);
+        map.addLayer(layer_Climbed_3);
         var baseMaps = {};
-        L.control.layers(baseMaps,{'<img src="legend/Climbed_6.png" /> Climbed': layer_Climbed_6,'<img src="legend/Notclimbed_5.png" /> Not climbed': layer_Notclimbed_5,'All Munros by height (m)<br /><table><tr><td style="text-align: center;"><img src="legend/AllMunrosbyheightm_4_9159340.png" /></td><td>915 - 934</td></tr><tr><td style="text-align: center;"><img src="legend/AllMunrosbyheightm_4_9349581.png" /></td><td>934 - 958</td></tr><tr><td style="text-align: center;"><img src="legend/AllMunrosbyheightm_4_9589872.png" /></td><td>958 - 987</td></tr><tr><td style="text-align: center;"><img src="legend/AllMunrosbyheightm_4_98710103.png" /></td><td>987 - 1010</td></tr><tr><td style="text-align: center;"><img src="legend/AllMunrosbyheightm_4_101010494.png" /></td><td>1010 - 1049</td></tr><tr><td style="text-align: center;"><img src="legend/AllMunrosbyheightm_4_104911125.png" /></td><td>1049 - 1112</td></tr><tr><td style="text-align: center;"><img src="legend/AllMunrosbyheightm_4_111213446.png" /></td><td>1112 - 1344</td></tr></table>': layer_AllMunrosbyheightm_4,"Thunderforest Landscape": layer_ThunderforestLandscape_3,"Thunderforest Outdoors": layer_ThunderforestOutdoors_2,"Thunderforest OpenCycleMap": layer_ThunderforestOpenCycleMap_1,"OSM standard": layer_OSMstandard_0,},{collapsed:false}).addTo(map);
+        L.control.layers(baseMaps,{'<img src="legend/Climbed_3.png" /> Climbed': layer_Climbed_3,'<img src="legend/Notclimbed_2.png" /> Not climbed': layer_Notclimbed_2,'All Munros by height (m)<br /><table><tr><td style="text-align: center;"><img src="legend/AllMunrosbyheightm_1_9159340.png" /></td><td>915 - 934</td></tr><tr><td style="text-align: center;"><img src="legend/AllMunrosbyheightm_1_9349581.png" /></td><td>934 - 958</td></tr><tr><td style="text-align: center;"><img src="legend/AllMunrosbyheightm_1_9589872.png" /></td><td>958 - 987</td></tr><tr><td style="text-align: center;"><img src="legend/AllMunrosbyheightm_1_98710103.png" /></td><td>987 - 1010</td></tr><tr><td style="text-align: center;"><img src="legend/AllMunrosbyheightm_1_101010494.png" /></td><td>1010 - 1049</td></tr><tr><td style="text-align: center;"><img src="legend/AllMunrosbyheightm_1_104911125.png" /></td><td>1049 - 1112</td></tr><tr><td style="text-align: center;"><img src="legend/AllMunrosbyheightm_1_111213446.png" /></td><td>1112 - 1344</td></tr></table>': layer_AllMunrosbyheightm_1,"Thunderforest Landscape": layer_ThunderforestLandscape_0,}).addTo(map);
         setBounds();
         map.addControl(new L.Control.Search({
-            layer: layer_AllMunrosbyheightm_4,
+            layer: layer_AllMunrosbyheightm_1,
             initial: false,
             hideMarkerOnCollapse: true,
             propertyName: 'Name'}));
