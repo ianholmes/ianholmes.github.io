@@ -3,7 +3,7 @@
             background-color: #ffffff
         }
         html, body, #map {
-/*			overflow: hidden;*/
+			overflow: hidden;
         }
         .col9{
 			height: 100%!important;
@@ -188,3 +188,9 @@
         .leaflet-popup-pane {
             z-index: 700;
         }
+        .leaflet-control-layers-expanded .leaflet-control-layers-toggle {
+            display: none;
+        }
+body{
+	font-family: Jokerman, Verdana, Helvetica, sans-serif;
+}
