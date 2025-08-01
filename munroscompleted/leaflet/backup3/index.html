@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="css/L.Control.Locate.min.css">
         <link rel="stylesheet" href="css/qgis2web.css">
         <link rel="stylesheet" href="css/fontawesome-all.min.css">
-        <link rel="stylesheet" href="css/leaflet.photon.css">
+        <link rel="stylesheet" href="css/leaflet-search.css">
         <link rel="stylesheet" href="css/leaflet-measure.css">
         <style>
 		#map {
@@ -24,7 +24,7 @@
     </head>
     <body>
 		<h1>Munros completed</h1>
-		<p>Interactive map created with <a href="https://qgis.org" target="_blank">QGIS</a> and the <a href ="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web plugin</a>.<br />Last updated: 01/08/2025.</p.>
+		<p>Interactive map created with <a href="https://qgis.org" target="_blank">QGIS</a> and the <a href ="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web plugin</a>.<br />Last updated: 11/06/2025.</p.>
 		<p>A link back <a href="/index.html">home</a>.</p>
 
         <div id="map">
@@ -37,7 +37,6 @@
 			<li><b>Basemap:</b> © Thunderforest Landscape</li>
 			<li><b>Basemap:</b> © OpenStreetMap contributors</li>
 		</ul>
-
         <script src="js/qgis2web_expressions.js"></script>
         <script src="js/leaflet.js"></script>
         <script src="js/L.Control.Layers.Tree.min.js"></script>
@@ -50,11 +49,11 @@
         <script src="js/rbush.min.js"></script>
         <script src="js/labelgun.min.js"></script>
         <script src="js/labels.js"></script>
-        <script src="js/leaflet.photon.js"></script>
         <script src="js/leaflet-measure.js"></script>
-        <script src="data/Bothies_1.js"></script>
-        <script src="data/AllMunrosbyheightm_2.js"></script>
-        <script src="data/Munrosclimbed_3.js"></script>
+        <script src="js/leaflet-search.js"></script>
+        <script src="data/Bothies_4.js"></script>
+        <script src="data/AllMunrosbyheightm_5.js"></script>
+        <script src="data/Munrosclimbed_6.js"></script>
         <script>
         var highlightLayer;
         function highlightFeature(e) {
@@ -125,10 +124,10 @@
                 map.fitBounds(bounds_group.getBounds());
             }
         }
-        map.createPane('pane_ThunderforestLandscape_0');
-        map.getPane('pane_ThunderforestLandscape_0').style.zIndex = 400;
-        var layer_ThunderforestLandscape_0 = L.tileLayer('https://tile.thunderforest.com/landscape/{z}/{x}/{y}.png?apikey=f53f44e2da9e4c15a3dc7ca35335740e', {
-            pane: 'pane_ThunderforestLandscape_0',
+        map.createPane('pane_OSMstandard_0');
+        map.getPane('pane_OSMstandard_0').style.zIndex = 400;
+        var layer_OSMstandard_0 = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            pane: 'pane_OSMstandard_0',
             opacity: 1.0,
             attribution: '',
             minZoom: 1,
@@ -136,9 +135,45 @@
             minNativeZoom: 0,
             maxNativeZoom: 18
         });
-        layer_ThunderforestLandscape_0;
-        map.addLayer(layer_ThunderforestLandscape_0);
-        function pop_Bothies_1(feature, layer) {
+        layer_OSMstandard_0;
+        map.createPane('pane_ThunderforestOpenCycleMap_1');
+        map.getPane('pane_ThunderforestOpenCycleMap_1').style.zIndex = 401;
+        var layer_ThunderforestOpenCycleMap_1 = L.tileLayer('https://tile.thunderforest.com/cycle/{z}/{x}/{y}.png?apikey=f53f44e2da9e4c15a3dc7ca35335740e', {
+            pane: 'pane_ThunderforestOpenCycleMap_1',
+            opacity: 1.0,
+            attribution: '',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 18
+        });
+        layer_ThunderforestOpenCycleMap_1;
+        map.createPane('pane_ThunderforestOutdoors_2');
+        map.getPane('pane_ThunderforestOutdoors_2').style.zIndex = 402;
+        var layer_ThunderforestOutdoors_2 = L.tileLayer('https://tile.thunderforest.com/outdoors/{z}/{x}/{y}.png?apikey=f53f44e2da9e4c15a3dc7ca35335740e', {
+            pane: 'pane_ThunderforestOutdoors_2',
+            opacity: 1.0,
+            attribution: '',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 18
+        });
+        layer_ThunderforestOutdoors_2;
+        map.createPane('pane_ThunderforestLandscape_3');
+        map.getPane('pane_ThunderforestLandscape_3').style.zIndex = 403;
+        var layer_ThunderforestLandscape_3 = L.tileLayer('https://tile.thunderforest.com/landscape/{z}/{x}/{y}.png?apikey=f53f44e2da9e4c15a3dc7ca35335740e', {
+            pane: 'pane_ThunderforestLandscape_3',
+            opacity: 1.0,
+            attribution: '',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 18
+        });
+        layer_ThunderforestLandscape_3;
+        map.addLayer(layer_ThunderforestLandscape_3);
+        function pop_Bothies_4(feature, layer) {
             layer.on({
                 mouseout: function(e) {
                     for (var i in e.target._eventParents) {
@@ -172,9 +207,9 @@
 			layer.bindPopup(content, { maxHeight: 400 });
         }
 
-        function style_Bothies_1_0() {
+        function style_Bothies_4_0() {
             return {
-                pane: 'pane_Bothies_1',
+                pane: 'pane_Bothies_4',
                 radius: 5.0,
                 opacity: 1,
                 color: 'rgba(50,87,128,1.0)',
@@ -188,27 +223,27 @@
                 interactive: true,
             }
         }
-        map.createPane('pane_Bothies_1');
-        map.getPane('pane_Bothies_1').style.zIndex = 401;
-        map.getPane('pane_Bothies_1').style['mix-blend-mode'] = 'normal';
-        var layer_Bothies_1 = new L.geoJson(json_Bothies_1, {
+        map.createPane('pane_Bothies_4');
+        map.getPane('pane_Bothies_4').style.zIndex = 404;
+        map.getPane('pane_Bothies_4').style['mix-blend-mode'] = 'normal';
+        var layer_Bothies_4 = new L.geoJson(json_Bothies_4, {
             attribution: '',
             interactive: true,
-            dataVar: 'json_Bothies_1',
-            layerName: 'layer_Bothies_1',
-            pane: 'pane_Bothies_1',
-            onEachFeature: pop_Bothies_1,
+            dataVar: 'json_Bothies_4',
+            layerName: 'layer_Bothies_4',
+            pane: 'pane_Bothies_4',
+            onEachFeature: pop_Bothies_4,
             pointToLayer: function (feature, latlng) {
                 var context = {
                     feature: feature,
                     variables: {}
                 };
-                return L.shapeMarker(latlng, style_Bothies_1_0(feature));
+                return L.shapeMarker(latlng, style_Bothies_4_0(feature));
             },
         });
-        bounds_group.addLayer(layer_Bothies_1);
-        map.addLayer(layer_Bothies_1);
-        function pop_AllMunrosbyheightm_2(feature, layer) {
+        bounds_group.addLayer(layer_Bothies_4);
+        map.addLayer(layer_Bothies_4);
+        function pop_AllMunrosbyheightm_5(feature, layer) {
             layer.on({
                 mouseout: function(e) {
                     for (var i in e.target._eventParents) {
@@ -248,10 +283,10 @@
 			layer.bindPopup(content, { maxHeight: 400 });
         }
 
-        function style_AllMunrosbyheightm_2_0(feature) {
+        function style_AllMunrosbyheightm_5_0(feature) {
             if (feature.properties['Height (m)'] >= 914.600000 && feature.properties['Height (m)'] <= 934.142857 ) {
                 return {
-                pane: 'pane_AllMunrosbyheightm_2',
+                pane: 'pane_AllMunrosbyheightm_5',
                 radius: 6.0,
                 opacity: 1,
                 color: 'rgba(35,35,35,1.0)',
@@ -267,7 +302,7 @@
             }
             if (feature.properties['Height (m)'] >= 934.142857 && feature.properties['Height (m)'] <= 958.000000 ) {
                 return {
-                pane: 'pane_AllMunrosbyheightm_2',
+                pane: 'pane_AllMunrosbyheightm_5',
                 radius: 6.0,
                 opacity: 1,
                 color: 'rgba(35,35,35,1.0)',
@@ -283,7 +318,7 @@
             }
             if (feature.properties['Height (m)'] >= 958.000000 && feature.properties['Height (m)'] <= 987.000000 ) {
                 return {
-                pane: 'pane_AllMunrosbyheightm_2',
+                pane: 'pane_AllMunrosbyheightm_5',
                 radius: 6.0,
                 opacity: 1,
                 color: 'rgba(35,35,35,1.0)',
@@ -299,7 +334,7 @@
             }
             if (feature.properties['Height (m)'] >= 987.000000 && feature.properties['Height (m)'] <= 1010.000000 ) {
                 return {
-                pane: 'pane_AllMunrosbyheightm_2',
+                pane: 'pane_AllMunrosbyheightm_5',
                 radius: 6.0,
                 opacity: 1,
                 color: 'rgba(35,35,35,1.0)',
@@ -315,7 +350,7 @@
             }
             if (feature.properties['Height (m)'] >= 1010.000000 && feature.properties['Height (m)'] <= 1049.000000 ) {
                 return {
-                pane: 'pane_AllMunrosbyheightm_2',
+                pane: 'pane_AllMunrosbyheightm_5',
                 radius: 6.0,
                 opacity: 1,
                 color: 'rgba(35,35,35,1.0)',
@@ -331,7 +366,7 @@
             }
             if (feature.properties['Height (m)'] >= 1049.000000 && feature.properties['Height (m)'] <= 1111.700000 ) {
                 return {
-                pane: 'pane_AllMunrosbyheightm_2',
+                pane: 'pane_AllMunrosbyheightm_5',
                 radius: 6.0,
                 opacity: 1,
                 color: 'rgba(35,35,35,1.0)',
@@ -347,7 +382,7 @@
             }
             if (feature.properties['Height (m)'] >= 1111.700000 && feature.properties['Height (m)'] <= 1344.000000 ) {
                 return {
-                pane: 'pane_AllMunrosbyheightm_2',
+                pane: 'pane_AllMunrosbyheightm_5',
                 radius: 6.0,
                 opacity: 1,
                 color: 'rgba(35,35,35,1.0)',
@@ -362,26 +397,26 @@
             }
             }
         }
-        map.createPane('pane_AllMunrosbyheightm_2');
-        map.getPane('pane_AllMunrosbyheightm_2').style.zIndex = 402;
-        map.getPane('pane_AllMunrosbyheightm_2').style['mix-blend-mode'] = 'normal';
-        var layer_AllMunrosbyheightm_2 = new L.geoJson(json_AllMunrosbyheightm_2, {
+        map.createPane('pane_AllMunrosbyheightm_5');
+        map.getPane('pane_AllMunrosbyheightm_5').style.zIndex = 405;
+        map.getPane('pane_AllMunrosbyheightm_5').style['mix-blend-mode'] = 'normal';
+        var layer_AllMunrosbyheightm_5 = new L.geoJson(json_AllMunrosbyheightm_5, {
             attribution: '',
             interactive: true,
-            dataVar: 'json_AllMunrosbyheightm_2',
-            layerName: 'layer_AllMunrosbyheightm_2',
-            pane: 'pane_AllMunrosbyheightm_2',
-            onEachFeature: pop_AllMunrosbyheightm_2,
+            dataVar: 'json_AllMunrosbyheightm_5',
+            layerName: 'layer_AllMunrosbyheightm_5',
+            pane: 'pane_AllMunrosbyheightm_5',
+            onEachFeature: pop_AllMunrosbyheightm_5,
             pointToLayer: function (feature, latlng) {
                 var context = {
                     feature: feature,
                     variables: {}
                 };
-                return L.circleMarker(latlng, style_AllMunrosbyheightm_2_0(feature));
+                return L.circleMarker(latlng, style_AllMunrosbyheightm_5_0(feature));
             },
         });
-        bounds_group.addLayer(layer_AllMunrosbyheightm_2);
-        function pop_Munrosclimbed_3(feature, layer) {
+        bounds_group.addLayer(layer_AllMunrosbyheightm_5);
+        function pop_Munrosclimbed_6(feature, layer) {
             layer.on({
                 mouseout: function(e) {
                     for (var i in e.target._eventParents) {
@@ -429,11 +464,11 @@
 			layer.bindPopup(content, { maxHeight: 400 });
         }
 
-        function style_Munrosclimbed_3_0(feature) {
+        function style_Munrosclimbed_6_0(feature) {
             switch(String(feature.properties['Climbed'])) {
                 case 'No':
                     return {
-                pane: 'pane_Munrosclimbed_3',
+                pane: 'pane_Munrosclimbed_6',
                 radius: 8.0,
                 opacity: 1,
                 color: 'rgba(35,35,35,1.0)',
@@ -449,7 +484,7 @@
                     break;
                 case 'Yes':
                     return {
-                pane: 'pane_Munrosclimbed_3',
+                pane: 'pane_Munrosclimbed_6',
                 radius: 8.0,
                 opacity: 1,
                 color: 'rgba(35,35,35,1.0)',
@@ -465,31 +500,34 @@
                     break;
             }
         }
-        map.createPane('pane_Munrosclimbed_3');
-        map.getPane('pane_Munrosclimbed_3').style.zIndex = 403;
-        map.getPane('pane_Munrosclimbed_3').style['mix-blend-mode'] = 'normal';
-        var layer_Munrosclimbed_3 = new L.geoJson(json_Munrosclimbed_3, {
+        map.createPane('pane_Munrosclimbed_6');
+        map.getPane('pane_Munrosclimbed_6').style.zIndex = 406;
+        map.getPane('pane_Munrosclimbed_6').style['mix-blend-mode'] = 'normal';
+        var layer_Munrosclimbed_6 = new L.geoJson(json_Munrosclimbed_6, {
             attribution: '',
             interactive: true,
-            dataVar: 'json_Munrosclimbed_3',
-            layerName: 'layer_Munrosclimbed_3',
-            pane: 'pane_Munrosclimbed_3',
-            onEachFeature: pop_Munrosclimbed_3,
+            dataVar: 'json_Munrosclimbed_6',
+            layerName: 'layer_Munrosclimbed_6',
+            pane: 'pane_Munrosclimbed_6',
+            onEachFeature: pop_Munrosclimbed_6,
             pointToLayer: function (feature, latlng) {
                 var context = {
                     feature: feature,
                     variables: {}
                 };
-                return L.circleMarker(latlng, style_Munrosclimbed_3_0(feature));
+                return L.circleMarker(latlng, style_Munrosclimbed_6_0(feature));
             },
         });
-        bounds_group.addLayer(layer_Munrosclimbed_3);
-        map.addLayer(layer_Munrosclimbed_3);
+        bounds_group.addLayer(layer_Munrosclimbed_6);
+        map.addLayer(layer_Munrosclimbed_6);
         var overlaysTree = [
-            {label: 'Munros (climbed?)<br /><table><tr><td style="text-align: center;"><img src="legend/Munrosclimbed_3_No0.png" /></td><td>No</td></tr><tr><td style="text-align: center;"><img src="legend/Munrosclimbed_3_Yes1.png" /></td><td>Yes</td></tr></table>', layer: layer_Munrosclimbed_3},
-            {label: 'All Munros by height (m)<br /><table><tr><td style="text-align: center;"><img src="legend/AllMunrosbyheightm_2_9159340.png" /></td><td>915 - 934</td></tr><tr><td style="text-align: center;"><img src="legend/AllMunrosbyheightm_2_9349581.png" /></td><td>934 - 958</td></tr><tr><td style="text-align: center;"><img src="legend/AllMunrosbyheightm_2_9589872.png" /></td><td>958 - 987</td></tr><tr><td style="text-align: center;"><img src="legend/AllMunrosbyheightm_2_98710103.png" /></td><td>987 - 1010</td></tr><tr><td style="text-align: center;"><img src="legend/AllMunrosbyheightm_2_101010494.png" /></td><td>1010 - 1049</td></tr><tr><td style="text-align: center;"><img src="legend/AllMunrosbyheightm_2_104911125.png" /></td><td>1049 - 1112</td></tr><tr><td style="text-align: center;"><img src="legend/AllMunrosbyheightm_2_111213446.png" /></td><td>1112 - 1344</td></tr></table>', layer: layer_AllMunrosbyheightm_2},
-            {label: '<img src="legend/Bothies_1.png" /> Bothies', layer: layer_Bothies_1},
-            {label: "Thunderforest Landscape", layer: layer_ThunderforestLandscape_0, radioGroup: 'bm' },]
+            {label: 'Munros (climbed?)<br /><table><tr><td style="text-align: center;"><img src="legend/Munrosclimbed_6_No0.png" /></td><td>No</td></tr><tr><td style="text-align: center;"><img src="legend/Munrosclimbed_6_Yes1.png" /></td><td>Yes</td></tr></table>', layer: layer_Munrosclimbed_6},
+            {label: 'All Munros by height (m)<br /><table><tr><td style="text-align: center;"><img src="legend/AllMunrosbyheightm_5_9159340.png" /></td><td>915 - 934</td></tr><tr><td style="text-align: center;"><img src="legend/AllMunrosbyheightm_5_9349581.png" /></td><td>934 - 958</td></tr><tr><td style="text-align: center;"><img src="legend/AllMunrosbyheightm_5_9589872.png" /></td><td>958 - 987</td></tr><tr><td style="text-align: center;"><img src="legend/AllMunrosbyheightm_5_98710103.png" /></td><td>987 - 1010</td></tr><tr><td style="text-align: center;"><img src="legend/AllMunrosbyheightm_5_101010494.png" /></td><td>1010 - 1049</td></tr><tr><td style="text-align: center;"><img src="legend/AllMunrosbyheightm_5_104911125.png" /></td><td>1049 - 1112</td></tr><tr><td style="text-align: center;"><img src="legend/AllMunrosbyheightm_5_111213446.png" /></td><td>1112 - 1344</td></tr></table>', layer: layer_AllMunrosbyheightm_5},
+            {label: '<img src="legend/Bothies_4.png" /> Bothies', layer: layer_Bothies_4},
+            {label: "Thunderforest Landscape", layer: layer_ThunderforestLandscape_3, radioGroup: 'bm' },
+            {label: "Thunderforest Outdoors", layer: layer_ThunderforestOutdoors_2, radioGroup: 'bm' },
+            {label: "Thunderforest OpenCycleMap", layer: layer_ThunderforestOpenCycleMap_1, radioGroup: 'bm' },
+            {label: "OSM standard", layer: layer_OSMstandard_0, radioGroup: 'bm' },]
         var lay = L.control.layers.tree(null, overlaysTree,{
             //namedToggle: true,
             //selectorBack: false,
@@ -551,6 +589,13 @@
             }  
         });       
         setBounds();
+        map.addControl(new L.Control.Search({
+            layer: layer_Munrosclimbed_6,
+            initial: false,
+            hideMarkerOnCollapse: true,
+            propertyName: 'Name'}));
+        document.getElementsByClassName('search-button')[0].className +=
+         ' fa fa-binoculars';
         </script>
     </body>
 </html>
