@@ -3,7 +3,7 @@
             background-color: #ffffff
         }
         html, body, #map {
-/*			overflow: hidden;*/
+			overflow: hidden;
         }
         .col9{
 			height: 100%!important;
